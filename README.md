@@ -14,6 +14,7 @@ It starts with two neutral child wallets. Each wallet keeps a local ledger of de
 - Automatic running balance
 - Parent PIN unlock
 - Printable ledgers
+- Custom child wallet names
 
 ## Download
 
@@ -44,6 +45,12 @@ The first-run PIN is:
 After unlocking, use **Change PIN** in the left sidebar to choose a different 4 digit PIN.
 
 This is a simple family-use lock, not high-security encryption.
+
+## Child Wallets
+
+AirWallet starts with `Child 1` and `Child 2` so the public app does not include anyone's real names.
+
+After unlocking parent mode, use **Child names** to rename the selected wallet or add another child wallet.
 
 ## Printing
 
@@ -79,10 +86,11 @@ cargo build --release
 
 The app stores data locally in your operating system's app data folder as JSON.
 
-If `cargo` is not on PATH on Windows, try:
+If `cargo` is not on PATH on Windows, add Rust's Cargo folder to PATH:
 
 ```powershell
-C:\Users\danie\.cargo\bin\cargo.exe run
+$env:Path += ";$env:USERPROFILE\.cargo\bin"
+cargo run
 ```
 
 ## Release Checklist
@@ -95,6 +103,14 @@ See [docs/RELEASE.md](docs/RELEASE.md).
 - Local-first, no accounts or cloud service required
 - Easy to open source and maintain
 - Friendly interface for parents and kids
+
+## Contributing
+
+This is a maintainer-led family app. Contributions are welcome when they fit the project goals, but all changes must go through issues or pull requests and maintainer review.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+
+Repository protection recommendations are documented in [docs/GITHUB_SETTINGS.md](docs/GITHUB_SETTINGS.md).
 
 ## License
 

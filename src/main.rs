@@ -65,6 +65,8 @@ struct AirWalletApp {
     selected_wallet: usize,
     draft: EntryDraft,
     starting_balance_input: String,
+    child_name_input: String,
+    new_child_name_input: String,
     pin_input: String,
     new_pin_input: String,
     parent_unlocked: bool,
@@ -88,6 +90,8 @@ impl AirWalletApp {
                 kind: EntryKind::Deduction,
             },
             starting_balance_input: String::new(),
+            child_name_input: String::new(),
+            new_child_name_input: String::new(),
             pin_input: String::new(),
             new_pin_input: String::new(),
             parent_unlocked: false,
@@ -194,6 +198,45 @@ impl AirWalletApp {
         self.save();
     }
 
+    fn rename_selected_child(&mut self) {
+        if !self.parent_unlocked {
+            self.status = "Unlock parent mode before renaming wallets.".to_owned();
+            return;
+        }
+
+        let name = self.child_name_input.trim().to_owned();
+        if !valid_child_name(&name) {
+            self.status = "Use a child name between 1 and 40 characters.".to_owned();
+            return;
+        }
+
+        self.selected_wallet_mut().child_name = name;
+        self.child_name_input.clear();
+        self.save();
+    }
+
+    fn add_child_wallet(&mut self) {
+        if !self.parent_unlocked {
+            self.status = "Unlock parent mode before adding wallets.".to_owned();
+            return;
+        }
+
+        let name = self.new_child_name_input.trim().to_owned();
+        if !valid_child_name(&name) {
+            self.status = "Use a child name between 1 and 40 characters.".to_owned();
+            return;
+        }
+
+        self.data.wallets.push(Wallet {
+            child_name: name,
+            starting_balance_cents: 0,
+            entries: Vec::new(),
+        });
+        self.selected_wallet = self.data.wallets.len() - 1;
+        self.new_child_name_input.clear();
+        self.save();
+    }
+
     fn remove_latest_entry(&mut self) {
         if !self.parent_unlocked {
             self.status = "Unlock parent mode before removing entries.".to_owned();
@@ -285,7 +328,7 @@ impl eframe::App for AirWalletApp {
             .min_width(210.0)
             .show(ctx, |ui| {
                 ui.add_space(10.0);
-                ui.label(RichText::new("Twin Wallets").strong().size(18.0));
+                ui.label(RichText::new("Wallets").strong().size(18.0));
                 ui.add_space(8.0);
 
                 for index in 0..self.data.wallets.len() {
@@ -338,6 +381,8 @@ impl eframe::App for AirWalletApp {
             self.wallet_header(ui);
             ui.add_space(14.0);
             self.quick_actions(ui);
+            ui.add_space(10.0);
+            self.wallet_settings(ui);
             ui.add_space(10.0);
             self.balance_tools(ui);
             ui.add_space(10.0);
@@ -432,6 +477,37 @@ impl AirWalletApp {
                 }
                 if ui.button("-$15").clicked() {
                     self.quick_entry("Purchase", 1500, EntryKind::Deduction);
+                }
+            });
+        });
+    }
+
+    fn wallet_settings(&mut self, ui: &mut egui::Ui) {
+        let selected_child_name = self.selected_wallet().child_name.clone();
+
+        egui::Frame::group(ui.style()).show(ui, |ui| {
+            ui.horizontal_wrapped(|ui| {
+                ui.label(RichText::new("Child names").strong());
+                ui.label("Rename selected");
+                ui.add_sized(
+                    [170.0, 24.0],
+                    egui::TextEdit::singleline(&mut self.child_name_input)
+                        .hint_text(selected_child_name),
+                );
+                if ui.button("Rename").clicked() {
+                    self.rename_selected_child();
+                }
+
+                ui.separator();
+
+                ui.label("Add wallet");
+                ui.add_sized(
+                    [170.0, 24.0],
+                    egui::TextEdit::singleline(&mut self.new_child_name_input)
+                        .hint_text("Child name"),
+                );
+                if ui.button("Add child").clicked() {
+                    self.add_child_wallet();
                 }
             });
         });
@@ -717,6 +793,10 @@ fn valid_pin(pin: &str) -> bool {
     pin.len() == 4 && pin.chars().all(|character| character.is_ascii_digit())
 }
 
+fn valid_child_name(name: &str) -> bool {
+    !name.trim().is_empty() && name.chars().count() <= 40
+}
+
 fn format_money(cents: i64) -> String {
     let sign = if cents < 0 { "-" } else { "" };
     let absolute = cents.abs();
@@ -860,6 +940,16 @@ mod tests {
         assert!(valid_pin("1234"));
         assert!(!valid_pin("123"));
         assert!(!valid_pin("12a4"));
+    }
+
+    #[test]
+    fn validates_child_names() {
+        assert!(valid_child_name("Child 1"));
+        assert!(!valid_child_name(""));
+        assert!(!valid_child_name("   "));
+        assert!(!valid_child_name(
+            "This name is too long for the AirWallet sidebar"
+        ));
     }
 
     #[test]

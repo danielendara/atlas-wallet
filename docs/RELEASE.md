@@ -5,9 +5,9 @@ Use this checklist when preparing an AirWallet release.
 ## Local Checks
 
 ```powershell
-C:\Users\danie\.cargo\bin\cargo.exe fmt -- --check
-C:\Users\danie\.cargo\bin\cargo.exe test
-C:\Users\danie\.cargo\bin\cargo.exe build --release
+cargo fmt -- --check
+cargo test
+cargo build --release
 .\scripts\package-windows.ps1 -Version 0.1.0
 ```
 
@@ -32,6 +32,10 @@ The installer output is written to `dist/`.
 4. Push the tag to GitHub.
 5. Attach the generated portable zip and installer to the GitHub Release.
 
+## Repository Controls
+
+Before announcing a release, review [GITHUB_SETTINGS.md](GITHUB_SETTINGS.md).
+
 ## Manual Smoke Test
 
 Before publishing, open AirWallet and verify:
@@ -40,6 +44,8 @@ Before publishing, open AirWallet and verify:
 - The parent PIN screen appears first.
 - PIN `1234` unlocks a fresh install.
 - Both default child wallets are visible.
+- The selected wallet can be renamed.
+- A new child wallet can be added.
 - Adding a deposit changes the running balance.
 - Adding a deduction changes the running balance.
 - Print this ledger opens a printable browser page.
