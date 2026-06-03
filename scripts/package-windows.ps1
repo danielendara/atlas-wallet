@@ -4,9 +4,10 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+$PackageVersion = $Version -replace '^v', ''
 $root = Resolve-Path (Join-Path $PSScriptRoot "..")
 $dist = Join-Path $root "dist"
-$packageName = "AirWallet-$Version-windows-x64"
+$packageName = "AirWallet-$PackageVersion-windows-x64"
 $packageDir = Join-Path $dist $packageName
 $zipPath = Join-Path $dist "$packageName.zip"
 $cargo = Join-Path $env:USERPROFILE ".cargo\bin\cargo.exe"
@@ -31,7 +32,7 @@ try {
     Copy-Item -LiteralPath (Join-Path $root "docs") -Destination $packageDir -Recurse
 
     @"
-AirWallet $Version
+AirWallet $PackageVersion
 
 Run AirWallet.exe to start.
 First-run parent PIN: 1234

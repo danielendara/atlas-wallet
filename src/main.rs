@@ -282,7 +282,7 @@ impl AirWalletApp {
         } else {
             format!(
                 "airwallet-{}-ledger.html",
-                self.selected_wallet().child_name.to_lowercase()
+                ledger_file_stem(&self.selected_wallet().child_name)
             )
         };
 
@@ -680,14 +680,26 @@ fn load_app_data(path: &PathBuf) -> Option<AppData> {
     let contents = fs::read_to_string(path).ok()?;
 
     if let Ok(data) = serde_json::from_str::<AppData>(&contents) {
-        return Some(data);
+        return normalize_app_data(data);
     }
 
     let wallets = serde_json::from_str::<Vec<Wallet>>(&contents).ok()?;
-    Some(AppData {
+    normalize_app_data(AppData {
         parent_pin: DEFAULT_PARENT_PIN.to_owned(),
         wallets,
     })
+}
+
+fn normalize_app_data(mut data: AppData) -> Option<AppData> {
+    if data.wallets.is_empty() {
+        return None;
+    }
+
+    if !valid_pin(&data.parent_pin) {
+        data.parent_pin = DEFAULT_PARENT_PIN.to_owned();
+    }
+
+    Some(data)
 }
 
 fn save_app_data(path: &PathBuf, data: &AppData) -> Result<(), String> {
@@ -795,6 +807,31 @@ fn valid_pin(pin: &str) -> bool {
 
 fn valid_child_name(name: &str) -> bool {
     !name.trim().is_empty() && name.chars().count() <= 40
+}
+
+fn ledger_file_stem(child_name: &str) -> String {
+    let mut stem = String::new();
+    let mut last_was_separator = false;
+
+    for character in child_name.trim().chars().flat_map(char::to_lowercase) {
+        if character.is_ascii_alphanumeric() {
+            stem.push(character);
+            last_was_separator = false;
+        } else if !last_was_separator && !stem.is_empty() {
+            stem.push('-');
+            last_was_separator = true;
+        }
+    }
+
+    while stem.ends_with('-') {
+        stem.pop();
+    }
+
+    if stem.is_empty() {
+        "wallet".to_owned()
+    } else {
+        stem.chars().take(48).collect()
+    }
 }
 
 fn format_money(cents: i64) -> String {
@@ -950,6 +987,36 @@ mod tests {
         assert!(!valid_child_name(
             "This name is too long for the AirWallet sidebar"
         ));
+    }
+
+    #[test]
+    fn rejects_empty_loaded_wallets() {
+        let data = AppData {
+            parent_pin: "1234".to_owned(),
+            wallets: Vec::new(),
+        };
+
+        assert!(normalize_app_data(data).is_none());
+    }
+
+    #[test]
+    fn resets_invalid_loaded_pin() {
+        let data = AppData {
+            parent_pin: "nope".to_owned(),
+            wallets: default_wallets(),
+        };
+
+        assert_eq!(
+            normalize_app_data(data).unwrap().parent_pin,
+            DEFAULT_PARENT_PIN
+        );
+    }
+
+    #[test]
+    fn creates_safe_ledger_file_stems() {
+        assert_eq!(ledger_file_stem("A/B: Kid?"), "a-b-kid");
+        assert_eq!(ledger_file_stem("   "), "wallet");
+        assert_eq!(ledger_file_stem("Jane & Sam"), "jane-sam");
     }
 
     #[test]
