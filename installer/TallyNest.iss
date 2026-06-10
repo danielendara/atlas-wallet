@@ -1,7 +1,7 @@
-#define MyAppName "AirWallet"
+#define MyAppName "TallyNest"
 #define MyAppVersion "0.1.0"
-#define MyAppPublisher "AirWallet contributors"
-#define MyAppExeName "AirWallet.exe"
+#define MyAppPublisher "TallyNest contributors"
+#define MyAppExeName "TallyNest.exe"
 
 [Setup]
 AppId={{7E03D696-5391-45E7-B1CB-065713F2186D}
@@ -13,7 +13,7 @@ DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 LicenseFile=..\LICENSE
 OutputDir=..\dist
-OutputBaseFilename=AirWallet-{#MyAppVersion}-Setup
+OutputBaseFilename=TallyNest-{#MyAppVersion}-Setup
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern

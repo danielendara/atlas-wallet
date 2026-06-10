@@ -1,10 +1,10 @@
-# AirWallet
+# TallyNest
 
-AirWallet is a small Windows-friendly Rust desktop app for tracking money held for kids.
+TallyNest is a small Windows-friendly Rust desktop app for tracking money held for kids.
 
-![AirWallet parent PIN screen](docs/screenshots/airwallet-pin-screen.png)
+![TallyNest parent PIN screen](docs/screenshots/tallynest-pin-screen.png)
 
-![AirWallet child wallet ledger](docs/screenshots/airwallet-wallet-screen.png)
+![TallyNest child wallet ledger](docs/screenshots/tallynest-wallet-screen.png)
 
 It starts with two neutral child wallets. Each wallet keeps a local ledger of deposits and deductions, similar to a handwritten allowance sheet:
 
@@ -23,7 +23,7 @@ It starts with two neutral child wallets. Each wallet keeps a local ledger of de
 For a local build, the Windows executable is:
 
 ```text
-target\release\AirWallet.exe
+target\release\TallyNest.exe
 ```
 
 For a portable release zip:
@@ -36,7 +36,7 @@ The zip will be created in `dist/`.
 
 ## Parent PIN
 
-AirWallet opens to a parent PIN screen so kids cannot add or remove entries without a parent unlocking the app first.
+TallyNest opens to a parent PIN screen so kids cannot add or remove entries without a parent unlocking the app first.
 
 The first-run PIN is:
 
@@ -50,7 +50,7 @@ This is a simple family-use lock, not high-security encryption.
 
 ## Child Wallets
 
-AirWallet starts with `Child 1` and `Child 2` so the public app does not include anyone's real names.
+TallyNest starts with `Child 1` and `Child 2` so the public app does not include anyone's real names.
 
 After unlocking parent mode, use **Child names** to rename the selected wallet or add another child wallet.
 
@@ -58,11 +58,11 @@ After unlocking parent mode, use **Child names** to rename the selected wallet o
 
 Use **Print this ledger** to print the selected child's ledger, or **Print both ledgers** to print both child wallets together.
 
-AirWallet creates a local printable HTML file and opens it in your browser with the print dialog ready.
+TallyNest creates a local printable HTML file and opens it in your browser with the print dialog ready.
 
 ## Windows Installer
 
-The repository includes an Inno Setup script at `installer/AirWallet.iss`.
+The repository includes an Inno Setup script at `installer/TallyNest.iss`.
 
 Build the release executable first:
 
@@ -70,7 +70,7 @@ Build the release executable first:
 cargo build --release
 ```
 
-Then open `installer/AirWallet.iss` in Inno Setup and compile the installer. The installer output is written to `dist/`.
+Then open `installer/TallyNest.iss` in Inno Setup and compile the installer. The installer output is written to `dist/`.
 
 ## Development
 
@@ -87,6 +87,7 @@ cargo build --release
 ```
 
 The app stores data locally in your operating system's app data folder as JSON.
+Existing AirWallet data is imported automatically on the first TallyNest launch.
 
 If `cargo` is not on PATH on Windows, add Rust's Cargo folder to PATH:
 
