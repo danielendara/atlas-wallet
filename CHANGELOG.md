@@ -2,8 +2,8 @@
 
 ## Unreleased
 
-- Renames TallyNest to Atlas Wallet (chosen by the kids for the wallet analogy).
-- Preserves automatic legacy data import for previous TallyNest installs and original AirWallet data.
+- Renames the app to Cofferly after product-name collisions with previous AirWallet and Atlas Wallet names.
+- Preserves automatic legacy data import for previous Atlas Wallet, TallyNest, and original AirWallet installs.
 - Updates all references in code, docs, build scripts, installer, tests, screenshots, and GitHub workflows.
 
 ## 0.1.0

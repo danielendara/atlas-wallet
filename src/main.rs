@@ -9,8 +9,9 @@ mod money;
 mod print_html;
 mod theme;
 
-pub const APP_NAME: &str = "Atlas Wallet";
+pub const APP_NAME: &str = "Cofferly";
 pub const DATA_FILE_NAME: &str = "data.json";
+pub const ATLAS_LEGACY_APP_NAME: &str = "Atlas Wallet";
 pub const ATLAS_LEGACY_DATA_FILE_NAME: &str = "atlas-wallet-data.json";
 pub const LEGACY_APP_NAME: &str = "TallyNest";
 pub const LEGACY_DATA_FILE_NAME: &str = "tallynest-data.json";
@@ -32,7 +33,7 @@ fn main() -> eframe::Result<()> {
             .with_inner_size([1080.0, 720.0])
             .with_min_inner_size([820.0, 560.0])
             .with_title(APP_NAME)
-            .with_app_id("com.atlaswallet.app")
+            .with_app_id("com.cofferly.app")
             .with_icon(app_icon()),
         ..Default::default()
     };
@@ -40,7 +41,7 @@ fn main() -> eframe::Result<()> {
     eframe::run_native(
         APP_NAME,
         options,
-        Box::new(|cc| Ok(Box::new(AtlasWalletApp::new(cc)))),
+        Box::new(|cc| Ok(Box::new(CofferlyApp::new(cc)))),
     )
 }
 
@@ -51,7 +52,7 @@ struct EntryDraft {
     kind: EntryKind,
 }
 
-struct AtlasWalletApp {
+struct CofferlyApp {
     data: AppData,
     selected_wallet: usize,
     ledger_sort: LedgerSort,
@@ -67,7 +68,7 @@ struct AtlasWalletApp {
     data_path: PathBuf,
 }
 
-impl AtlasWalletApp {
+impl CofferlyApp {
     fn new(cc: &eframe::CreationContext<'_>) -> Self {
         configure_style(&cc.egui_ctx);
 
@@ -90,7 +91,7 @@ impl AtlasWalletApp {
             pending_pin_focus: Some(0),
             new_pin_input: String::new(),
             parent_unlocked: false,
-            status: "Enter the parent PIN to unlock Atlas Wallet.".to_owned(),
+            status: "Enter the parent PIN to unlock Cofferly.".to_owned(),
             data_path,
         }
     }
@@ -343,10 +344,10 @@ impl AtlasWalletApp {
 
     fn print_path(&self, all_wallets: bool) -> PathBuf {
         let file_name = if all_wallets {
-            "atlas-wallet-ledgers.html".to_owned()
+            "cofferly-ledgers.html".to_owned()
         } else {
             format!(
-                "atlas-wallet-{}-ledger.html",
+                "cofferly-{}-ledger.html",
                 ledger_file_stem(&self.selected_wallet().child_name)
             )
         };
@@ -366,7 +367,7 @@ impl AtlasWalletApp {
     }
 }
 
-impl eframe::App for AtlasWalletApp {
+impl eframe::App for CofferlyApp {
     fn ui(&mut self, ui: &mut egui::Ui, _frame: &mut eframe::Frame) {
         if !self.parent_unlocked {
             self.lock_screen(ui);
@@ -458,7 +459,7 @@ impl eframe::App for AtlasWalletApp {
     }
 }
 
-impl AtlasWalletApp {
+impl CofferlyApp {
     fn lock_screen(&mut self, ui: &mut egui::Ui) {
         egui::CentralPanel::default().show_inside(ui, |ui| {
             ui.vertical_centered(|ui| {

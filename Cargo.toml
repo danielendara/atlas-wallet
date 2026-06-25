@@ -1,13 +1,13 @@
 [package]
-name = "atlas-wallet"
+name = "cofferly"
 version = "0.1.0"
 edition = "2021"
-description = "Atlas Wallet — a simple local allowance wallet for kids."
+description = "Cofferly - a simple local allowance wallet for kids."
 license = "MIT"
-repository = "https://github.com/danielendara/atlas-wallet"
+repository = "https://github.com/danielendara/cofferly"
 
 [[bin]]
-name = "AtlasWallet"
+name = "Cofferly"
 path = "src/main.rs"
 
 [dependencies]
@@ -23,3 +23,5 @@ serde_json = "1"
 opt-level = 2
 lto = true
 codegen-units = 1
+
+

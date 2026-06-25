@@ -1,6 +1,6 @@
 # Code of Conduct
 
-Atlas Wallet should be a calm, useful, family-friendly project.
+Cofferly should be a calm, useful, family-friendly project.
 
 ## Expected Behavior
 
@@ -18,3 +18,4 @@ Atlas Wallet should be a calm, useful, family-friendly project.
 ## Enforcement
 
 Maintainers may close issues, reject pull requests, remove comments, or block participants when needed to keep the project healthy.
+

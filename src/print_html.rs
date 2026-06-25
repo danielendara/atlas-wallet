@@ -48,7 +48,7 @@ pub fn write_printable_ledger(path: &PathBuf, wallets: &[Wallet]) -> Result<Path
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Atlas Wallet Ledger</title>
+<title>Cofferly Ledger</title>
 <style>
 body {{ font-family: "Segoe UI", Arial, sans-serif; color: #1d2528; margin: 36px; }}
 section {{ break-after: page; margin-bottom: 40px; }}

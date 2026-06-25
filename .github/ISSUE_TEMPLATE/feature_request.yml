@@ -1,5 +1,5 @@
 name: Feature request
-description: Suggest an improvement for AirWallet.
+description: Suggest an improvement for Cofferly.
 title: "[Feature]: "
 labels: ["enhancement"]
 body:
@@ -22,3 +22,4 @@ body:
     id: alternatives
     attributes:
       label: Alternatives considered
+
