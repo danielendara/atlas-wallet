@@ -1,5 +1,5 @@
 name: Bug report
-description: Report something that is broken in AirWallet.
+description: Report something that is broken in Cofferly.
 title: "[Bug]: "
 labels: ["bug"]
 body:
@@ -22,12 +22,13 @@ body:
   - type: input
     id: version
     attributes:
-      label: AirWallet version
+      label: Cofferly version
       placeholder: "0.1.0"
   - type: textarea
     id: steps
     attributes:
       label: Steps to reproduce
-      placeholder: "1. Open AirWallet..."
+      placeholder: "1. Open Cofferly..."
     validations:
       required: true
+

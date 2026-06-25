@@ -1,6 +1,6 @@
 # GitHub Repository Settings
 
-These settings help keep Atlas Wallet public while still maintainer-controlled.
+These settings help keep Cofferly public while still maintainer-controlled.
 
 ## General
 
@@ -51,3 +51,4 @@ In **Settings > Collaborators and teams**:
 - Do not add collaborators casually.
 - Prefer pull requests from forks.
 - Give direct write access only to people you trust to maintain releases and protect family privacy.
+

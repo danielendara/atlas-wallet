@@ -34,5 +34,6 @@ jobs:
       - name: Upload portable artifact
         uses: actions/upload-artifact@v7
         with:
-          name: AtlasWallet-windows-x64
+          name: Cofferly-windows-x64
           path: dist/*.zip
+

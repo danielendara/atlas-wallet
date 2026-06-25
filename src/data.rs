@@ -143,7 +143,7 @@ mod tests {
         assert!(!valid_child_name(""));
         assert!(!valid_child_name("   "));
         assert!(!valid_child_name(
-            "This name is too long for the Atlas Wallet sidebar"
+            "This name is too long for the Cofferly sidebar"
         ));
     }
 

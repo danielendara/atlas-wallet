@@ -1,6 +1,6 @@
 ## Summary
 
-Describe the change and why it belongs in Atlas Wallet.
+Describe the change and why it belongs in Cofferly.
 
 ## Checklist
 
@@ -12,3 +12,4 @@ Describe the change and why it belongs in Atlas Wallet.
 ## Notes
 
 Anything the maintainer should pay special attention to?
+

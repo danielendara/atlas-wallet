@@ -1,7 +1,7 @@
-#define MyAppName "Atlas Wallet"
+#define MyAppName "Cofferly"
 #define MyAppVersion "0.1.0"
-#define MyAppPublisher "Atlas Wallet contributors"
-#define MyAppExeName "AtlasWallet.exe"
+#define MyAppPublisher "Cofferly contributors"
+#define MyAppExeName "Cofferly.exe"
 
 [Setup]
 AppId={{7E03D696-5391-45E7-B1CB-065713F2186D}
@@ -13,7 +13,7 @@ DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 LicenseFile=..\LICENSE
 OutputDir=..\dist
-OutputBaseFilename=AtlasWallet-{#MyAppVersion}-Setup
+OutputBaseFilename=Cofferly-{#MyAppVersion}-Setup
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -40,3 +40,4 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+
