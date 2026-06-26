@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add encryption for the local data file using Argon2id key derivation + XChaCha20-Poly1305 authenticated encryption. Data is encrypted at rest with the parent PIN to prevent casual tampering. Old plain JSON files (including legacy imports) are automatically migrated on first successful unlock.
 - Renames the app to Cofferly after product-name collisions with previous AirWallet and Atlas Wallet names.
 - Preserves automatic legacy data import for previous Atlas Wallet, TallyNest, and original AirWallet installs.
 - Updates all references in code, docs, build scripts, installer, tests, screenshots, and GitHub workflows.

@@ -72,7 +72,7 @@ pub fn decrypt(encrypted: &[u8], pin: &str) -> Result<Vec<u8>, String> {
         return Err("truncated encrypted data".to_string());
     }
 
-    let salt = &encrypted[1..1 + SALT_LEN];
+    let salt = &encrypted[1..=SALT_LEN];
     let nonce = &encrypted[1 + SALT_LEN..1 + SALT_LEN + NONCE_LEN];
     let ciphertext = &encrypted[1 + SALT_LEN + NONCE_LEN..];
 

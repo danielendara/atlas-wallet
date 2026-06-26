@@ -115,10 +115,27 @@ pub fn save_encrypted(path: &PathBuf, data: &AppData, pin: &str) -> Result<(), S
     let json =
         serde_json::to_vec(data).map_err(|err| format!("Failed to serialize data: {err}"))?;
     let encrypted = crate::crypto::encrypt(&json, pin)?;
+
     if let Some(parent) = path.parent() {
         fs::create_dir_all(parent).map_err(|err| err.to_string())?;
     }
-    fs::write(path, encrypted).map_err(|err| err.to_string())
+
+    let parent = path
+        .parent()
+        .ok_or_else(|| format!("Could not find parent folder for {}", path.display()))?;
+    let mut temp_file = tempfile::NamedTempFile::new_in(parent).map_err(|err| err.to_string())?;
+    temp_file
+        .write_all(&encrypted)
+        .map_err(|err| err.to_string())?;
+    temp_file
+        .as_file_mut()
+        .sync_all()
+        .map_err(|err| err.to_string())?;
+    temp_file
+        .persist(path)
+        .map_err(|err| err.error.to_string())?;
+
+    Ok(())
 }
 
 pub fn save_app_data(path: &PathBuf, data: &AppData) -> Result<(), String> {
