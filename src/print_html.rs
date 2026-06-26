@@ -11,22 +11,26 @@ pub fn write_printable_ledger(path: &PathBuf, wallets: &[Wallet]) -> Result<Path
 
     let mut body = String::new();
     for wallet in wallets {
-        body.push_str(&format!(
+        let header = format!(
             "<section><h1>{}</h1><p class=\"balance\">Current balance: {}</p>",
             escape_html(&wallet.child_name),
             format_money(wallet.current_balance_cents())
-        ));
+        );
+        body.push_str(&header);
+
         body.push_str(
             "<table><thead><tr><th>Date</th><th>Description</th><th>Amount</th><th>Balance</th></tr></thead><tbody>",
         );
-        body.push_str(&format!(
+
+        let start_row = format!(
             "<tr><td>Start</td><td>Starting balance</td><td>{}</td><td>{}</td></tr>",
             format_money(wallet.starting_balance_cents),
             format_money(wallet.starting_balance_cents)
-        ));
+        );
+        body.push_str(&start_row);
 
         for (entry, balance) in wallet.rows_with_balance() {
-            body.push_str(&format!(
+            let row = format!(
                 "<tr><td>{}</td><td>{}</td><td class=\"{}\">{}</td><td>{}</td></tr>",
                 entry.date.format("%m/%d/%Y"),
                 escape_html(&entry.description),
@@ -37,7 +41,8 @@ pub fn write_printable_ledger(path: &PathBuf, wallets: &[Wallet]) -> Result<Path
                 },
                 format_money(entry.amount_cents),
                 format_money(balance)
-            ));
+            );
+            body.push_str(&row);
         }
 
         body.push_str("</tbody></table></section>");
@@ -65,11 +70,10 @@ td:last-child, th:last-child, td:nth-child(3), th:nth-child(3) {{ text-align: ri
 </head>
 <body>
 <button onclick="window.print()">Print</button>
-{}
+{body}
 <script>setTimeout(() => window.print(), 350);</script>
 </body>
-</html>"#,
-        body
+</html>"#
     );
 
     fs::write(path, html).map_err(|err| err.to_string())?;

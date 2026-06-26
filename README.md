@@ -46,7 +46,7 @@ The first-run PIN is:
 
 After unlocking, use **Change PIN** in the left sidebar to choose a different 4 digit PIN.
 
-This is a simple family-use lock, not high-security encryption.
+The PIN is used both to unlock the interface and to derive the key for encrypting the data file on disk. It is a simple family-use protection (4 digits), not high-security encryption.
 
 ## Child Wallets
 
@@ -86,8 +86,11 @@ To create a release build:
 cargo build --release
 ```
 
-The app stores data locally in your operating system's app data folder as JSON.
-Existing Atlas Wallet, TallyNest, and AirWallet data is imported automatically on the first launch.
+The app stores data locally in your operating system's app data folder.
+
+Data files are encrypted at rest using the parent PIN (Argon2id key derivation + XChaCha20-Poly1305 authenticated encryption). This protects against casual tampering with the ledger file.
+
+Old plain JSON files (including imports from Atlas Wallet / TallyNest / AirWallet) are automatically migrated to the encrypted format the first time you successfully unlock with the parent PIN.
 
 If `cargo` is not on PATH on Windows, add Rust's Cargo folder to PATH:
 

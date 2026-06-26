@@ -99,9 +99,9 @@ fn rounded_rect(x: u32, y: u32, left: u32, top: u32, width: u32, height: u32, ra
         y
     };
 
-    let dx = x as i64 - cx as i64;
-    let dy = y as i64 - cy as i64;
-    dx * dx + dy * dy <= (radius as i64) * (radius as i64)
+    let dx = i64::from(x) - i64::from(cx);
+    let dy = i64::from(y) - i64::from(cy);
+    dx * dx + dy * dy <= i64::from(radius) * i64::from(radius)
 }
 
 #[cfg(test)]
