@@ -1,12 +1,13 @@
 use eframe::egui::{self, vec2, Color32, Stroke};
 
 pub const ACCENT: Color32 = Color32::from_rgb(42, 157, 143); // Teal - modern, trustworthy
+pub const ACCENT_LIGHT: Color32 = Color32::from_rgb(230, 245, 243); // Very light teal for subtle fills
 pub const TEXT_PRIMARY: Color32 = Color32::from_rgb(33, 37, 41);
 pub const TEXT_SECONDARY: Color32 = Color32::from_rgb(108, 117, 125);
 pub const POSITIVE: Color32 = Color32::from_rgb(40, 167, 69);
 pub const NEGATIVE: Color32 = Color32::from_rgb(220, 53, 69);
-pub const CARD_BG: Color32 = Color32::from_rgb(248, 249, 250);
-pub const BORDER: Color32 = Color32::from_rgb(222, 226, 230);
+pub const CARD_BG: Color32 = Color32::from_rgb(255, 255, 255); // Match background for lower contrast
+pub const BORDER: Color32 = Color32::from_rgb(240, 240, 240); // Very subtle border
 
 pub fn balance_color(cents: i64) -> Color32 {
     cents_color(cents)
@@ -38,10 +39,10 @@ pub fn configure_style(ctx: &egui::Context) {
     style.visuals.selection.bg_fill = ACCENT;
     style.visuals.selection.stroke = Stroke::new(1.0, Color32::WHITE);
 
-    style.visuals.widgets.inactive.bg_fill = Color32::from_rgb(233, 236, 239);
-    style.visuals.widgets.hovered.bg_fill = Color32::from_rgb(222, 226, 230);
+    style.visuals.widgets.inactive.bg_fill = Color32::from_rgb(240, 240, 240);
+    style.visuals.widgets.hovered.bg_fill = ACCENT_LIGHT;
 
-    // Subtle panel / window look
+    // Subtle panel / window look - lower contrast
     style.visuals.panel_fill = Color32::WHITE;
     style.visuals.window_fill = Color32::WHITE;
     style.visuals.window_stroke = Stroke::new(1.0, BORDER);
