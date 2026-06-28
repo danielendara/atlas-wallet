@@ -1090,14 +1090,23 @@ impl CofferlyApp {
                         row.col(|ui| {
                             let date_text = egui::RichText::new(ledger_row.date.label())
                                 .size(if is_start { 10.0 } else { 11.0 })
-                                .color(if is_start { theme::TEXT_SECONDARY } else { theme::TEXT_SECONDARY });
+                                .color(if is_start {
+                                    theme::TEXT_SECONDARY
+                                } else {
+                                    theme::TEXT_SECONDARY
+                                });
                             ui.label(date_text);
                         });
                         row.col(|ui| {
                             let desc = if is_start {
-                                egui::RichText::new(ledger_row.description).size(10.0).italics().color(theme::TEXT_SECONDARY)
+                                egui::RichText::new(ledger_row.description)
+                                    .size(10.0)
+                                    .italics()
+                                    .color(theme::TEXT_SECONDARY)
                             } else {
-                                egui::RichText::new(ledger_row.description).size(12.0).color(theme::TEXT_PRIMARY)
+                                egui::RichText::new(ledger_row.description)
+                                    .size(12.0)
+                                    .color(theme::TEXT_PRIMARY)
                             };
                             ui.label(desc);
                         });
