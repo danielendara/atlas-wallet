@@ -2,6 +2,7 @@ use eframe::egui::{self, vec2, Color32, Stroke};
 
 pub const ACCENT: Color32 = Color32::from_rgb(42, 157, 143); // Teal - modern, trustworthy
 pub const ACCENT_LIGHT: Color32 = Color32::from_rgb(230, 245, 243); // Very light teal for subtle fills
+pub const ACCENT_LIGHTER: Color32 = Color32::from_rgb(90, 185, 175); // Lighter teal for buttons on light backgrounds (e.g. lock screen)
 pub const TEXT_PRIMARY: Color32 = Color32::from_rgb(33, 37, 41);
 pub const TEXT_SECONDARY: Color32 = Color32::from_rgb(100, 108, 117);
 pub const POSITIVE: Color32 = Color32::from_rgb(40, 167, 69);
